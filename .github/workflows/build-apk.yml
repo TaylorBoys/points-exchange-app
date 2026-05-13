@@ -27,7 +27,20 @@ jobs:
     - name: Build web app
       run: pnpm run build
     
-    - name: Sync to Android using pnpm
+    - name: Setup Android SDK before sync
+      uses: android-actions/setup-android@v3
+      with:
+        api-level: 34
+        build-tools: 34.0.0
+    
+    - name: Debug info before sync
+      run: |
+        echo "Node version: $(node -v)"
+        echo "pnpm version: $(pnpm -v)"
+        echo "PATH: $PATH"
+        ls -la node_modules/.bin/cap* 2>/dev/null || echo "cap not found"
+    
+    - name: Sync to Android
       run: pnpm exec cap sync android
     
     - name: Set up JDK
@@ -35,12 +48,6 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-    
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      with:
-        api-level: 34
-        build-tools: 34.0.0
     
     - name: Cache Gradle
       uses: actions/cache@v3
