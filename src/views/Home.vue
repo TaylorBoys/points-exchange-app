@@ -12,7 +12,7 @@ const gifts = computed(() => store.gifts);
 
 const navItems = [
   { name: '礼物兑换', icon: Gift, path: '/gifts' },
-  { name: '积分历史', icon: History, path: '/history' },
+  { name: '历史记录', icon: History, path: '/history' },
   { name: '用户管理', icon: Settings, path: '/users' },
 ];
 

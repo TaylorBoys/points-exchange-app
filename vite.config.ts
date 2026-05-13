@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/points-exchange-app/',
   plugins: [
     vue(),
     VitePWA({
@@ -15,8 +16,8 @@ export default defineConfig({
         theme_color: '#3b82f6',
         background_color: '#ffffff',
         display: 'standalone',
-        scope: '/',
-        start_url: '/'
+        scope: '/points-exchange-app/',
+        start_url: '/points-exchange-app/'
       }
     })
   ],
