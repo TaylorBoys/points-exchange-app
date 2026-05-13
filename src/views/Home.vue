@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/stores/appStore';
-import { Coins, Gift, History, Settings, UserCircle, ChevronRight } from 'lucide-vue-next';
+import { Coins, Gift, History, UserCircle, ChevronRight, ListTodo } from 'lucide-vue-next';
 
 const router = useRouter();
 const store = useAppStore();
@@ -12,8 +12,8 @@ const gifts = computed(() => store.gifts);
 
 const navItems = [
   { name: '礼物兑换', icon: Gift, path: '/gifts' },
+  { name: '任务中心', icon: ListTodo, path: '/tasks' },
   { name: '历史记录', icon: History, path: '/history' },
-  { name: '用户管理', icon: Settings, path: '/users' },
 ];
 
 function goToAdmin() {

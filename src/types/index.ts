@@ -34,11 +34,30 @@ export interface Exchange {
   approvedAt?: string;
 }
 
+export interface Task {
+  id: string;
+  name: string;
+  description: string;
+  points: number;
+  createdAt: string;
+}
+
+export interface TaskCompletion {
+  id: string;
+  taskId: string;
+  userId: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  approvedAt?: string;
+}
+
 export interface AppState {
   users: User[];
   gifts: Gift[];
   pointHistories: PointHistory[];
   exchanges: Exchange[];
+  tasks: Task[];
+  taskCompletions: TaskCompletion[];
   currentUser: User | null;
   isAdmin: boolean;
 }

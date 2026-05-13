@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/Gifts.vue'),
     },
     {
+      path: '/tasks',
+      name: 'Tasks',
+      component: () => import('@/views/Tasks.vue'),
+    },
+    {
       path: '/history',
       name: 'History',
       component: () => import('@/views/History.vue'),
@@ -45,6 +50,12 @@ const router = createRouter({
       path: '/admin/exchanges',
       name: 'AdminExchanges',
       component: () => import('@/views/admin/AdminExchanges.vue'),
+      meta: { requiresAdmin: true },
+    },
+    {
+      path: '/admin/tasks',
+      name: 'AdminTasks',
+      component: () => import('@/views/admin/AdminTasks.vue'),
       meta: { requiresAdmin: true },
     },
   ],
