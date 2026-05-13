@@ -60,15 +60,31 @@ function deleteGift(giftId: string) {
 function handleImageUpload(e: Event) {
   const input = e.target as HTMLInputElement;
   const file = input.files?.[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      giftForm.value.image = result;
-      imagePreview.value = result;
-    };
-    reader.readAsDataURL(file);
+  
+  if (!file) {
+    return;
   }
+  
+  if (!file.type.startsWith('image/')) {
+    alert('请选择图片文件');
+    return;
+  }
+  
+  if (file.size > 2 * 1024 * 1024) {
+    alert('图片大小不能超过2MB');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const result = event.target?.result as string;
+    giftForm.value.image = result;
+    imagePreview.value = result;
+  };
+  reader.onerror = () => {
+    alert('图片读取失败，请重试');
+  };
+  reader.readAsDataURL(file);
 }
 
 function logout() {
@@ -181,13 +197,11 @@ function logout() {
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">礼物图片</label>
             <div class="relative">
-              <input
-                type="file"
-                accept="image/*"
-                @change="handleImageUpload"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-              />
-              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition-colors">
+              <button
+                type="button"
+                @click="($refs.imageInput as HTMLInputElement).click()"
+                class="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition-colors"
+              >
                 <div v-if="imagePreview" class="mb-2">
                   <img :src="imagePreview" alt="预览" class="max-h-48 mx-auto rounded-lg" />
                   <p class="text-xs text-gray-500 mt-2">点击可更换图片</p>
@@ -195,9 +209,16 @@ function logout() {
                 <div v-else>
                   <ImageIcon class="w-16 h-16 text-gray-400 mx-auto mb-3" />
                   <p class="text-base text-gray-600 font-medium">点击上传图片</p>
-                  <p class="text-xs text-gray-400 mt-1">支持 JPG、PNG 格式</p>
+                  <p class="text-xs text-gray-400 mt-1">支持 JPG、PNG 格式（最大2MB）</p>
                 </div>
-              </div>
+              </button>
+              <input
+                ref="imageInput"
+                type="file"
+                accept="image/*"
+                @change="handleImageUpload"
+                class="hidden"
+              />
             </div>
           </div>
           

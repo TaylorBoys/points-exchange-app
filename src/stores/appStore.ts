@@ -17,7 +17,7 @@ const defaultGifts: Gift[] = [
     description: '高品质无线蓝牙耳机', 
     points: 1000, 
     stock: 10, 
-    image: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=wireless%20bluetooth%20headphones%20product%20photo%20white%20background&image_size=square',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop',
     createdAt: '2024-01-01'
   },
   { 
@@ -26,8 +26,17 @@ const defaultGifts: Gift[] = [
     description: '不锈钢真空保温杯', 
     points: 500, 
     stock: 20, 
-    image: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=stainless%20steel%20thermos%20cup%20product%20photo%20white%20background&image_size=square',
+    image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=300&fit=crop',
     createdAt: '2024-01-02'
+  },
+  { 
+    id: '3', 
+    name: '智能手环', 
+    description: '健康运动监测手环', 
+    points: 800, 
+    stock: 15, 
+    image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400&h=300&fit=crop',
+    createdAt: '2024-01-03'
   },
 ];
 
