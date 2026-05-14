@@ -26,7 +26,7 @@ function getGenderText(gender: string) {
   return '';
 }
 
-const appVersion = 'v1.3.0';
+const appVersion = 'v1.4.0';
 </script>
 
 <template>
