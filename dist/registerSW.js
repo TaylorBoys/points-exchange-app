@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/points-exchange-app/sw.js', { scope: '/points-exchange-app/' })})}
