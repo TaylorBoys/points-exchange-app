@@ -182,7 +182,6 @@ export const useAppStore = defineStore('app', () => {
   function loginAsAdmin(password: string): boolean {
     if (password === 'admin123') {
       isAdmin.value = true;
-      currentUser.value = null;
       return true;
     }
     return false;
