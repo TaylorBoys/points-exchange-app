@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { User, Gift, PointHistory, Exchange, Task, TaskCompletion } from '@/types'
-import { memfireClient } from '@/memfire';
 
 const STORAGE_KEY = 'points-exchange-data';
 
@@ -163,7 +162,7 @@ export const useAppStore = defineStore('app', () => {
     taskCompletions.value.filter(tc => tc.userId === userId)
   );
 
-  async function save() {
+  function save() {
     const dataToSave = {
       users: users.value,
       gifts: gifts.value,
@@ -173,51 +172,6 @@ export const useAppStore = defineStore('app', () => {
       taskCompletions: taskCompletions.value
     }
     saveDataToLocal(dataToSave)
-    
-    if (memfireClient) {
-      try {
-        const { error } = await memfireClient
-          .from('app_data')
-          .upsert({
-            id: 'default',
-            data: dataToSave,
-            updated_at: new Date().toISOString()
-          })
-        if (!error) {
-          console.log('数据已同步到 MemFire Cloud')
-        }
-      } catch (error) {
-        console.warn('同步到 MemFire Cloud 失败:', error)
-      }
-    }
-  }
-
-  async function loadFromCloud() {
-    if (!memfireClient) return false
-    
-    try {
-      const { data, error } = await memfireClient
-        .from('app_data')
-        .select('data')
-        .eq('id', 'default')
-        .single()
-      
-      if (!error && data?.data) {
-        console.log('从 MemFire Cloud 加载数据')
-        const cloudData = data.data
-        if (cloudData.users) users.value = cloudData.users
-        if (cloudData.gifts) gifts.value = cloudData.gifts
-        if (cloudData.pointHistories) pointHistories.value = cloudData.pointHistories
-        if (cloudData.exchanges) exchanges.value = cloudData.exchanges
-        if (cloudData.tasks) tasks.value = cloudData.tasks
-        if (cloudData.taskCompletions) taskCompletions.value = cloudData.taskCompletions
-        saveDataToLocal(cloudData)
-        return true
-      }
-    } catch (error) {
-      console.warn('从 MemFire Cloud 加载失败:', error)
-    }
-    return false
   }
 
   function login(user: User) {
@@ -419,13 +373,6 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  // 初始化时尝试从云端加载数据
-  (async () => {
-    if (memfireClient) {
-      await loadFromCloud();
-    }
-  })();
-
   return {
     users,
     gifts,
@@ -456,6 +403,5 @@ export const useAppStore = defineStore('app', () => {
     deleteTask,
     completeTask,
     approveTaskCompletion,
-    loadFromCloud,
   };
 });
